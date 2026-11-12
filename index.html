@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Paradigma 1: Programación estructurada</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🧭&lt;/text&gt;&lt;/svg&gt;"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&display=swap"
+    />
+    <style>
+      /* Estilos de la página: colores, tarjetas, botones y modo oscuro. */
+      :root {
+        --bg: #fff8e7;
+        --card: #fffdf5;
+        --ink: #2b2d42;
+        --mut: #5c5f77;
+        --co: #ef6f6c;
+        --te: #1f8a7d;
+        --mu: #f4b942;
+        --pu: #7b6cf6;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #1e2033;
+          --card: #2a2d45;
+          --ink: #fff8e7;
+          --mut: #b8b9cc;
+          --co: #ff8a87;
+          --te: #4cc9b8;
+          --mu: #f4b942;
+          --pu: #a99dff;
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #1e2033;
+        --card: #2a2d45;
+        --ink: #fff8e7;
+        --mut: #b8b9cc;
+        --co: #ff8a87;
+        --te: #4cc9b8;
+        --mu: #f4b942;
+        --pu: #a99dff;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          22px/1.4 "Patrick Hand",
+          cursive;
+      }
+      main {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 24px 20px 60px;
+      }
+      h1 {
+        font:
+          700 62px/1 Caveat,
+          cursive;
+        margin: 8px 0;
+      }
+      h2 {
+        font:
+          700 40px/1.1 Caveat,
+          cursive;
+        margin: 0 0 8px;
+      }
+      .sub {
+        color: var(--mut);
+        font-size: 24px;
+        margin: 0 0 8px;
+      }
+      .card {
+        background: var(--card);
+        border: 3px solid var(--ink);
+        border-radius: 20px;
+        padding: 18px 20px;
+        margin: 20px 0;
+      }
+      .row {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .row > * {
+        flex: 1;
+        min-width: 260px;
+      }
+      button {
+        font: inherit;
+        background: var(--mu);
+        color: #2b2d42;
+        border: 3px solid var(--ink);
+        border-radius: 12px;
+        padding: 4px 14px;
+        cursor: pointer;
+        margin: 4px 4px 4px 0;
+      }
+      button:hover {
+        filter: brightness(1.08);
+      }
+      pre {
+        background: #2b2d42;
+        color: #fff8e7;
+        border-radius: 12px;
+        padding: 12px;
+        font:
+          16px/1.6 ui-monospace,
+          Menlo,
+          monospace;
+        overflow-x: auto;
+        margin: 8px 0;
+      }
+      pre span {
+        display: block;
+        padding: 0 6px;
+        border-radius: 6px;
+      }
+      pre .hl {
+        background: #ef6f6c;
+        color: #fff;
+      }
+      pre .done {
+        color: #7fe0cf;
+      }
+      input,
+      select {
+        font: inherit;
+        border: 3px solid var(--ink);
+        border-radius: 10px;
+        padding: 2px 8px;
+        background: var(--card);
+        color: var(--ink);
+      }
+      .out {
+        min-height: 30px;
+        font-weight: bold;
+        margin-top: 6px;
+      }
+      .ok {
+        color: var(--te);
+      }
+      .bad {
+        color: var(--co);
+      }
+      .mut {
+        color: var(--mut);
+      }
+      .tag {
+        display: inline-block;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        padding: 0 12px;
+        font-size: 18px;
+      }
+      .tabs button.on {
+        background: var(--pu);
+        color: #fff;
+      }
+      .pill {
+        border-radius: 16px;
+        border: 3px solid var(--ink);
+        padding: 10px 14px;
+        background: var(--card);
+      }
+      .swatch {
+        height: 22px;
+        border-radius: 8px;
+        border: 2px solid var(--ink);
+        margin-bottom: 6px;
+      }
+      .anchor {
+        background: var(--mu);
+        color: #2b2d42;
+        border-radius: 14px;
+        padding: 10px 16px;
+        font-size: 24px;
+        border: 3px solid var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="tag">Paradigma 1 de 3</p>
+      <h1>Programación estructurada</h1>
+      <p class="sub">
+        Orden en el flujo del programa: solo tres estructuras bastan para cualquier algoritmo.
+      </p>
+      <div class="card">
+        <h2>El problema: el código espagueti</h2>
+        <p>
+          Con GOTO se saltaba a cualquier línea y seguir el hilo era imposible. Dijkstra (1968): “La
+          instrucción GOTO considerada dañina”.
+        </p>
+        <div class="row">
+          <div>
+            <b class="bad">Con GOTO</b>
+            <pre><span>10 LEER n</span><span>20 SI n >= 10 IR A 50</span><span>30 IR A 70</span><span>40 FIN</span><span>50 ESCRIBIR "aprobado"</span><span>60 IR A 40</span><span>70 ESCRIBIR "reprobado"</span><span>80 IR A 40</span></pre>
+          </div>
+          <div>
+            <b class="ok">Estructurado</b>
+            <pre><span>LEER n</span><span>SI n >= 10 ENTONCES</span><span>  ESCRIBIR "aprobado"</span><span>SINO</span><span>  ESCRIBIR "reprobado"</span><span>FIN SI</span></pre>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>1. Secuencia</h2>
+        <p class="sub">Una instrucción después de otra, en orden.</p>
+        <pre id="sq"></pre>
+        <button onclick="siguientePaso()">Ejecutar siguiente paso</button
+        ><button
+          onclick="
+            pasoActual = -1;
+            siguientePaso(true);
+          "
+        >
+          Reiniciar
+        </button>
+        <div class="out ok" id="sqo"></div>
+      </div>
+      <div class="card">
+        <h2>2. Selección</h2>
+        <p class="sub">Se toma una decisión según una condición. Mueve la nota:</p>
+        <p>
+          nota = <b id="nv">12</b>
+          <input type="range" id="nota" min="0" max="20" value="12" oninput="evaluarNota()" />
+        </p>
+        <pre id="se"></pre>
+        <div class="out" id="seo"></div>
+      </div>
+      <div class="card">
+        <h2>3. Iteración</h2>
+        <p class="sub">Se repite un bloque con un bucle. Cada clic es una vuelta.</p>
+        <pre id="it"></pre>
+        <p id="its" class="mut"></p>
+        <button onclick="siguienteVuelta()">Siguiente vuelta</button
+        ><button
+          onclick="
+            vueltaActual = 0;
+            aprobados = 0;
+            siguienteVuelta(true);
+          "
+        >
+          Reiniciar
+        </button>
+        <div class="out ok" id="ito"></div>
+      </div>
+      <p class="anchor">Para Recordar : Paradigma estructurado = orden en el flujo.</p>
+    </main>
+    <script>
+      /* Dibuja líneas de código dentro de un <pre> y resalta la activa. */
+      function pintarLineas(id, arr, act, done) {
+        document.getElementById(id).innerHTML = arr
+          .map(
+            (t, i) =>
+              '<span class="' +
+              (i == act ? "hl" : done && i < act ? "done" : "") +
+              '">' +
+              (done && i < act ? "✓ " : "") +
+              t.replace(/&/g, "&amp;").replace(/</g, "&lt;") +
+              "</span>",
+          )
+          .join("");
+      }
+      /* Atajo para buscar un elemento por su id. */
+      const porId = (id) => document.getElementById(id);
+      const pasosDeLaReceta = [
+        "hervir el agua",
+        "poner el café en el filtro",
+        "verter el agua",
+        "servir en la taza",
+      ];
+      let pasoActual = -1;
+      /* 1. SECUENCIA: ejecuta la receta paso a paso. */
+      function siguientePaso(r) {
+        if (!r) pasoActual++;
+        if (pasoActual >= pasosDeLaReceta.length) pasoActual = pasosDeLaReceta.length;
+        pintarLineas(
+          "sq",
+          pasosDeLaReceta.map((s, i) => i + 1 + ". " + s),
+          pasoActual,
+          true,
+        );
+        porId("sqo").textContent =
+          pasoActual >= pasosDeLaReceta.length ? "¡Listo! Siempre en este orden, sin saltos." : "";
+      }
+      siguientePaso(true);
+      /* 2. SELECCIÓN: decide aprobado/reprobado según la nota. */
+      function evaluarNota() {
+        const n = +porId("nota").value;
+        porId("nv").textContent = n;
+        const ap = n >= 10;
+        pintarLineas(
+          "se",
+          ["SI nota >= 10 ENTONCES", '  ESCRIBIR "aprobado"', "SINO", '  ESCRIBIR "reprobado"'],
+          -1,
+        );
+        const el = porId("se").children;
+        (ap ? [0, 1] : [0, 3]).forEach((i) => (el[i].className = "hl"));
+        porId("seo").innerHTML = ap
+          ? '<span class="ok">Se cumple la condición: aprobado</span>'
+          : '<span class="bad">No se cumple: reprobado</span>';
+      }
+      evaluarNota();
+      const notas = [12, 8, 15, 10, 6];
+      let vueltaActual = 0,
+        aprobados = 0;
+      /* 3. ITERACIÓN: cada clic es una vuelta del bucle. */
+      function siguienteVuelta(r) {
+        if (!r && vueltaActual < notas.length) {
+          if (notas[vueltaActual] >= 10) aprobados++;
+          vueltaActual++;
+        }
+        pintarLineas(
+          "it",
+          [
+            "PARA cada nota EN [12, 8, 15, 10, 6]",
+            "  SI nota >= 10 ENTONCES",
+            "    aprobados = aprobados + 1",
+          ],
+          vueltaActual > 0 && vueltaActual <= notas.length
+            ? notas[vueltaActual - 1] >= 10
+              ? 2
+              : 1
+            : -1,
+        );
+        porId("its").textContent =
+          "vueltas hechas: " +
+          vueltaActual +
+          " de 5 · nota actual: " +
+          (vueltaActual > 0 ? notas[vueltaActual - 1] : "-") +
+          " · aprobados = " +
+          aprobados;
+        porId("ito").textContent =
+          vueltaActual == notas.length ? "Fin del bucle: aprobados = " + aprobados : "";
+      }
+      siguienteVuelta(true);
+    </script>
+  </body>
+</html>
